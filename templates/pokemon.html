@@ -1,0 +1,25 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/app.css">
+    <title>Pokemon List</title>
+</head>
+<body>
+    <header>
+        <h1>Pokedex</h1>
+        <nav>
+            <a href="{{ url_for('index_bp.index') }}">Página principal</a>
+        </nav>
+    </header>
+
+    <div class="infopokemon">
+        <div class="pokemon">
+            <img src="{{ pokemon['image'] }}" alt="{{ pokemon['name'] }} Image">
+            <span>{{ pokemon['name'] }}</span>
+        </div>
+    </div> 
+</body>
+</html>
