@@ -4,15 +4,10 @@ pokemon_bp = Blueprint('pokemon_bp', __name__)
 
 @pokemon_bp.route('/pokemon')
 def index():
-    Pokemons = pokemon.query.all()
+    Pokemons = pokemon.query.order_by(pokemon.PokemonID).all()
 
     PokemonSDTs = [
-        {
-            'id': Pokemon.PokemonID,
-            'name': Pokemon.PokemonName,
-            'image': Pokemon.PokemonImage,
-            'rarity': Pokemon.PokemonRaridade
-        }
+        Pokemon.ToJson('gif')
         for Pokemon in Pokemons
     ]
 
@@ -25,14 +20,4 @@ def index_single(id):
     if Pokemon is None:
         return "<p>Pokemon não existe!</p>"
 
-    PokemonSDT = {
-        'id': Pokemon.PokemonID,
-        'name': Pokemon.PokemonName,
-        'image': 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/' + str(Pokemon.PokemonID) + '.png',
-        'rarity': Pokemon.PokemonRaridade,
-        'type': [
-            tipo.TypeDescription
-            for tipo in Pokemon.type
-        ]
-    }
-    return PokemonSDT
+    return Pokemon.ToJson('png')
