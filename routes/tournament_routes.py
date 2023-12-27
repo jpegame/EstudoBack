@@ -30,7 +30,11 @@ def GETTournament(id):
         'teams': [
             {
                 'id': team.TeamID,
-                'name': team.TeamName   
+                'name': team.TeamName,
+                'pokemons': [
+                    Pokemon.ToJson('png')
+                    for Pokemon in team.pokemon
+                ]
             }
             for team in Tournament.team
         ]

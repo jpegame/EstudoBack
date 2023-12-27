@@ -2,6 +2,22 @@ from flask import Blueprint, request, jsonify
 from models import team, db, pokemon
 team_bp = Blueprint('team_bp', __name__)
 
+@team_bp.route('/team')
+def GETTeams():
+    Teams: list(team) = team.query.all()
+    
+    TeamSDT = [{
+        'id': Team.TeamID,
+        'name': Team.TeamName,
+        'user': Team.UserID,
+        'pokemons': [
+            Pokemon.ToJson('png')
+            for Pokemon in Team.pokemon
+        ]
+    }for Team in Teams]
+    
+    return TeamSDT
+
 @team_bp.route('/team/<id>')
 def GETTeam(id):
     Team: team = team.query.get(id)
@@ -11,7 +27,7 @@ def GETTeam(id):
         'name': Team.TeamName,
         'user': Team.UserID,
         'pokemons': [
-            Pokemon.ToJson('gif')
+            Pokemon.ToJson('png')
             for Pokemon in Team.pokemon
         ]
     }
