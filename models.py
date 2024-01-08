@@ -47,6 +47,7 @@ TeamTournament = db.Table('TeamTournament',
     db.Column('TournamentID', db.Integer, db.ForeignKey('tournament.TournamentID'), primary_key=True),
     db.Column('TeamID', db.Integer, db.ForeignKey('team.TeamID'), primary_key=True)
 )
+
 class tournament(db.Model):
     TournamentID = db.Column(db.Integer, primary_key=True)
     TournamentName = db.Column(db.String(60), nullable=True)

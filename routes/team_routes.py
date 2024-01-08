@@ -34,6 +34,21 @@ def GETTeam(id):
     
     return TeamSDT
 
+@team_bp.route('/teambyuser/<id>')
+def GETTeamUser(id):
+    Team: team = team.query.filter_by(UserID=int(id)).first()
+    
+    TeamSDT = {
+        'id': Team.TeamID,
+        'name': Team.TeamName,
+        'user': Team.UserID,
+        'pokemons': [
+            Pokemon.ToJson('png')
+            for Pokemon in Team.pokemon
+        ]
+    }
+    
+    return TeamSDT
 
 
 @team_bp.route('/team', methods=['POST'])

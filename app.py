@@ -5,6 +5,7 @@ from routes.pokemon_routes import pokemon_bp
 from routes.login_routes import login_bp
 from routes.team_routes import team_bp
 from routes.tournament_routes import tournament_bp
+from routes.start_routes import socketio
 from models import db
 
 app = Flask(__name__)
@@ -29,4 +30,5 @@ app.register_blueprint(team_bp)
 app.register_blueprint(tournament_bp)
 
 if __name__ == '__main__':
-    app.run(debug=True,port=3001)
+    socketio.init_app(app, cors_allowed_origins="*")
+    socketio.run(app, debug=True, port=3001)

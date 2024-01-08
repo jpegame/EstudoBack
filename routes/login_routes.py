@@ -9,7 +9,8 @@ def login():
     
     if UserLogged:
         session['logged_in'] = True
-        session['username'] = UserLogged.UserID
+        session['userid'] = UserLogged.UserID
+        session['username'] = UserLogged.UserName
         return jsonify({'message': 'Login successful'}), 200
     else:
         return jsonify({'message': 'Invalid credentials'}), 401
@@ -19,6 +20,7 @@ def login():
 @login_bp.route('/logout', methods=['POST'])
 def logout():
     session.pop('logged_in', None)
+    session.pop('userid', None)
     session.pop('username', None)
     return jsonify({'message': 'Logout successful'}), 200
 
@@ -45,7 +47,7 @@ def register():
 @login_bp.route('/user_info')
 def user_info():
     if 'logged_in' in session and session['logged_in']:
-        return jsonify({'username': session['username']}), 200
+        return jsonify({'userid': session['userid'],'username': session['username']}), 200
     else:
         return jsonify({'message': 'Not logged in'}), 401
         
