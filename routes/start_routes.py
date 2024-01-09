@@ -1,5 +1,4 @@
-# socket_routes.py
-from flask import Blueprint
+from flask import request
 from flask_socketio import SocketIO
 import json
 
@@ -40,9 +39,14 @@ def handle_user_ready(data):
     if not Emit:
         SalaSelected.append({'sala':data['salaid'],'pokemon': data['pokemon'], 'userid': data['userid']})
     
-    # if data['salaid'] in SalaSelected:
-    #     SalaSelected.remove(data['salaid'])
-    #     socketio.send()
-    #     # socketio.emit('pokemonbothselected' + data['salaid'])
-    # else:
-    #     SalaSelected.append({'sala':data['salaid'],'pokemon': data['pokemon']})
+# client_turns = {}
+# @socketio.on('turn_taken')
+# def handle_turn_taken():
+#     print(request.sid)
+#     client_turns[request.sid] = 3 - client_turns[request.sid]
+#     socketio.emit('update_turn', {'turn': client_turns[request.sid]}, broadcast=True)
+    
+    
+@socketio.on('take_damage')
+def handle_turn_taken(data):
+    socketio.emit('update_life' + data['salaid'], data)
