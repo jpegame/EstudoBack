@@ -41,19 +41,20 @@ class type(db.Model):
     TypeID = db.Column(db.Integer, primary_key=True)
     TypeDescription = db.Column(db.String(40), unique=True)
 
-
-
-TeamTournament = db.Table('TeamTournament',
-    db.Column('TournamentID', db.Integer, db.ForeignKey('tournament.TournamentID'), primary_key=True),
-    db.Column('TeamID', db.Integer, db.ForeignKey('team.TeamID'), primary_key=True)
-)
+class match(db.Model):
+    MatchID = db.Column(db.Integer, primary_key=True)
+    matchStatus = db.Column(db.Enum('AGENDADA', 'EM ANDAMENTO','FINALIZADA', name='status_enum'), server_default='AGENDADA', nullable=True)
+    MatchLevel = db.Column(db.Integer, nullable=True)
+    TournamentID = db.Column(db.Integer, db.ForeignKey('tournament.TournamentID'), nullable=True)
+    Team1ID = db.Column(db.Integer, db.ForeignKey('team.TeamID'), nullable=True)
+    Team2ID = db.Column(db.Integer, db.ForeignKey('team.TeamID'), nullable=True)
 
 class tournament(db.Model):
-    TournamentID = db.Column(db.Integer, primary_key=True)
+    TournamentID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     TournamentName = db.Column(db.String(60), nullable=True)
-    TournamentDate = db.Column(db.DateTime, nullable=True)
-    team = db.relationship('team', secondary=TeamTournament, backref='tournament')
-    
+    TournamentStartDate = db.Column(db.DateTime, nullable=True)
+    TournamentEndDate = db.Column(db.DateTime, nullable=True)
+
 class team(db.Model):
     TeamID = db.Column(db.Integer, primary_key=True)
     TeamName = db.Column(db.String(60), nullable=True)

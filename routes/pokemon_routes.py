@@ -53,6 +53,7 @@ def pokemonstats():
             pokemon_data = response.json()
             moves = {
                 'id':id,
+                'name':pokemon_data['forms'][0]['name'],
                 'hp':pokemon_data['stats'][0]['base_stat'] + level,
                 'attack':pokemon_data['stats'][1]['base_stat'] + level,
                 'defense':pokemon_data['stats'][2]['base_stat'] + level,
