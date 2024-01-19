@@ -12,8 +12,8 @@ def GETListaTournament():
     TournamentSDTs = [{
         'id': Tournament.TournamentID,
         'name': Tournament.TournamentName,
-        'start-date': Tournament.TournamentStartDate.isoformat(),
-        'end-date': Tournament.TournamentEndDate.isoformat()
+        'start_date': Tournament.TournamentStartDate.isoformat(),
+        'end_date': Tournament.TournamentEndDate.isoformat()
     }for Tournament in Tournaments]
     
     return TournamentSDTs
@@ -29,8 +29,8 @@ def GETTournament(id):
     TournamentSDT = {
         'id': Tournament.TournamentID,
         'name': Tournament.TournamentName,
-        'start-date': Tournament.TournamentStartDate.isoformat(),
-        'end-date': Tournament.TournamentEndDate.isoformat(),
+        'start_date': Tournament.TournamentStartDate.isoformat(),
+        'end_date': Tournament.TournamentEndDate.isoformat(),
         'matches': [
             {
                 'level': Match.MatchLevel,
@@ -49,8 +49,8 @@ def GETTournament(id):
 @tournament_bp.route('/tournament', methods=['POST'])
 def POSTTournament():
     data = request.get_json()
-    TournamentStartDate = datetime.fromisoformat(data['start-date'])
-    TournamentEndDate = datetime.fromisoformat(data['end-date'])
+    TournamentStartDate = datetime.fromisoformat(data['start_date'])
+    TournamentEndDate = datetime.fromisoformat(data['end_date'])
     times = data['teams']
     
     if data['id']:
